@@ -1,6 +1,8 @@
+//Array declarations
 const requiredField = ['rule', 'data'];
 const possibbleConditions = ['eq', 'neq', 'gt', 'gte', 'contains'];
 
+//Main Validator
 const validator = (body) => {
     const rule = body['rule'];
     const bodyData = body['data'];
@@ -8,9 +10,13 @@ const validator = (body) => {
     if(body['rule'] && body['data']){
 
         if(typeof rule === "object" & (typeof bodyData === "object" || typeof bodyData === 'string' || Array.isArray(bodyData))){
+            
             const ruleFeild = typeof rule.field === 'string';
+            
             const ruleCondition = (typeof rule.condition === 'string' && possibbleConditions.includes(rule.condition));
+           
             const ruleConditionValue = (typeof rule.condition_value === 'string' || typeof rule.condition_value === 'number');
+            
             if( ruleFeild && ruleCondition && ruleConditionValue){
                 if(bodyData[rule.field]){
                     return validation(rule, bodyData);
@@ -50,6 +56,7 @@ const validator = (body) => {
     }
 }
 
+//Missing Required Field Validator Response
 const missingrequiredFieldValidator = (body) => {
     const misssingField = requiredField.filter((key) => {
         if(!(body[key])){
@@ -68,6 +75,7 @@ const missingrequiredFieldValidator = (body) => {
     return feedback;
 }
 
+//Missing DataType Validator Response
 const missingDataTypeValidator = (rule, bodyData) => {
     if(typeof rule !== 'object'){
         const feedback = {
@@ -94,6 +102,7 @@ const missingDataTypeValidator = (rule, bodyData) => {
 }
 
 
+//Conditional validator
 const validation = (rule, bodyData) => {
     const fieldValue = bodyData[rule.field];
     const conditionValue = rule.condition_value;
@@ -144,7 +153,7 @@ const validation = (rule, bodyData) => {
     }
 }
 
-
+//Successful Validation Response
 const successfulValidation = (rule, bodyData) => {
     const feedback = {
         status: 201,
@@ -165,6 +174,7 @@ const successfulValidation = (rule, bodyData) => {
     return feedback
 }
 
+//Failed Validation Response
 const errorValidation = (rule, bodyData) => {
     const feedback = {
         status: 201,
@@ -184,5 +194,7 @@ const errorValidation = (rule, bodyData) => {
     }
     return feedback
 }
+
+//Validator Export
 module.exports = validator;
 

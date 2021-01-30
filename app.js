@@ -1,17 +1,22 @@
+//Imports
 const express = require('express');
 const bodyParser = require('body-parser');
 const validator = require('./validator');
 
 
+//Initializing Express
 const app = express();
 
+//bodyParser
 app.use(bodyParser.json());
 
+//Post Route
 app.post('/validate-rule', (req, res, next) => {
     const receivedData = validator(req.body);
    res.status(receivedData.status).json(receivedData.mainFeedback);
 });
 
+//Get Route
 app.use('/', (req, res) => {
     const myData = {
         "message": "My Rule-Validation API",
@@ -27,4 +32,5 @@ app.use('/', (req, res) => {
     res.status(200).json(myData);
 })
 
+//Exports
 module.exports = app;
