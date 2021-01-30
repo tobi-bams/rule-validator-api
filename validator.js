@@ -23,12 +23,12 @@ const validator = (body) => {
                 }
                 else{
                     const feedback = {
+                        status: 400, 
                         mainFeedback: {
                             "message": `field ${rule.field} is missing from data.`,
                             "status": "error",
                             "data": null
-                          }, 
-                        status: 400 
+                          } 
                     }
                     return feedback;
                 }
@@ -36,12 +36,12 @@ const validator = (body) => {
             }
             else{
                 const feedback = {
+                    status: 400 ,
                     mainFeedback: {
                         "message": "Invalid JSON payload passed.",
                         "status": "error",
                         "data": null
-                      }, 
-                    status: 400 
+                      }
                 }
                 return feedback;
             }
@@ -156,7 +156,7 @@ const validation = (rule, bodyData) => {
 //Successful Validation Response
 const successfulValidation = (rule, bodyData) => {
     const feedback = {
-        status: 201,
+        status: 200,
         mainFeedback: {
             "message": `field ${rule.field} successfully validated.`,
             "status": "success",
@@ -177,7 +177,7 @@ const successfulValidation = (rule, bodyData) => {
 //Failed Validation Response
 const errorValidation = (rule, bodyData) => {
     const feedback = {
-        status: 201,
+        status: 400,
         mainFeedback:{
             "message": `field ${rule.field} failed validation.`,
             "status": "error",
