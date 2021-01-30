@@ -7,7 +7,7 @@ const validator = (body) => {
     const rule = body['rule'];
     const bodyData = body['data'];
 
-    if(body['rule'] && body['data']){
+    if(("rule" in body) && ("data" in body)){
 
         if(typeof rule === "object" & (typeof bodyData === "object" || typeof bodyData === 'string' || Array.isArray(bodyData))){
             
